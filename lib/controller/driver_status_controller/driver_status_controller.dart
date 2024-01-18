@@ -12,6 +12,7 @@ import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Services/user_preferences/user_preferences.dart';
 import '../../data/response/status.dart';
+import '../../model/attendance_model/attendance_model.dart';
 import '../../model/driver_status/driver_status_model.dart';
 import '../../res/utils/utils.dart';
 import '../../view/auth/login_screen.dart';
@@ -30,12 +31,12 @@ final driverStatusModel = DriverStatus().obs;
     // TODO: implement onInit
     super.onInit();
     getStatus();
-    driverStatus();
+    // driverStatus();
   }
   void driverStatus() {
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) async {
       UserPreference().getUser().then((value) async {
-        if(value.data != null){
+        if(value.data!.uniqueId != null && value.data!.bearerToken != null){
           try {
             var response = await _apiService.getApi(AppUrl.driverStatusApi);
             if(response['status_code'] == 200){
@@ -78,7 +79,6 @@ final RxBool isloading = false.obs;
       update();
       dynamic response = await _apiService.getApi(AppUrl.driverStatusApi);
       if(response['message'] == "Unauthenticated"){
-        Get.reset();
         userPreference.removeUser().then((value) => Get.offAll(LoginScreen()));
       }
       if(response['status_code'] == 200){
@@ -94,10 +94,12 @@ final RxBool isloading = false.obs;
         isloading.value = false;
       }
     } on SocketException catch (e) {
+      isloading.value = false;
       Get.back();
     }
     catch (e) {
       Get.back();
+      isloading.value = false;
       Utils.snackBar('error', e.toString());
       log(e.toString());
     }
@@ -159,8 +161,8 @@ final RxBool isloading = false.obs;
   @override
   void dispose() {
     // TODO: implement dispose
-    // _timer!.cancel();
-    DriverStatusController().dispose();
+    _timer!.cancel();
+    // DriverStatusController().dispose();
     super.dispose();
   }
 

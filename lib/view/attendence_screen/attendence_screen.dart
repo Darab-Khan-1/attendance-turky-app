@@ -1,10 +1,14 @@
 import 'package:attendence_app/Widgets/buttons/k_elevated_button.dart';
 import 'package:attendence_app/Widgets/form_fields/k_text.dart';
 import 'package:attendence_app/controller/driver_status_controller/driver_status_controller.dart';
+import 'package:attendence_app/view/attendence_screen/all_attendance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:gap/gap.dart';
+import 'package:lottie/lottie.dart';
+
+import '../../constants/colors.dart';
 class AttendanceScreen extends StatelessWidget {
   const AttendanceScreen({super.key});
   @override
@@ -28,7 +32,7 @@ class AttendanceScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      KText(text: "Check In at:", fontSize: 20),
+                      KText(text: "Checked In at:", fontSize: 20),
                       const Gap(10),
                       Text(DateFormat('hh:mm a').format(DateTime.parse(controller.driverStatusModel.value.data!.checkIn!))),
                     ],
@@ -47,7 +51,7 @@ class AttendanceScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          KText(text: "Check Out at:", fontSize: 20),
+                          KText(text: "Checked Out at:", fontSize: 20),
                           const Gap(10),
                           Text(DateFormat('hh:mm a').format(DateTime.parse(controller.driverStatusModel.value.data!.checkOut!))),
                         ],
@@ -72,6 +76,12 @@ class AttendanceScreen extends StatelessWidget {
                   // CheckButton(title: "Check Out", onPressed: () {}),
                 ],
               ),
+            ),
+            floatingActionButton: KFloatingButton(
+              lable: "View Details",
+              ontap: () {
+                Get.to(AllAttendanceScreen());
+              },
             ),
           );
         });

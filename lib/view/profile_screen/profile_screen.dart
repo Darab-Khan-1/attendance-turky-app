@@ -155,16 +155,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           )),
-          floatingActionButton: FloatingActionButton.extended(
-            tooltip: 'Logout',
-            backgroundColor: kPrimaryColor,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)),
-              onPressed: (){
-              controller.logoutApi(context);
-              }, label: KText(text: "Logout", color: kWhiteColor, fontSize: 12, fontWeight: FontWeight.bold,),
-            icon: Lottie.asset("assets/json/logout.json",width: 30,height: 30,)
-          ),
+          floatingActionButton: KFloatingButton(
+            lable: "Logout",
+            ontap: () {
+              if(isLogoutPressed.value == false){
+                isLogoutPressed.value = true;
+                controller.logoutApi(context);
+              }
+            },
+          )
       ),
     );
   }

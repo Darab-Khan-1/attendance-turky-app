@@ -11,5 +11,6 @@ class AppUrl {
   static const String checkInApi = '$baseUrl/api/check/in';
   static const String checkOutApi = '$baseUrl/api/check/out';
   static const String driverStatusApi = '$baseUrl/api/status';
+  static const String allAttendanceApi = '$baseUrl/api/all/attendance';
 
 }

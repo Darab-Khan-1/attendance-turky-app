@@ -4,6 +4,7 @@ import 'package:attendence_app/controller/driver_status_controller/driver_status
 import 'package:attendence_app/view/attendence_screen/attendence_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import '../../Widgets/navigationBar/navigationBar.dart';
 import '../../constants/colors.dart';
 import '../map_view/map_view.dart';
@@ -19,13 +20,13 @@ class BottomNavigationBarScreen extends StatefulWidget {
 
 class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   int _selectedIndex = 0;
-
+final _driverStatusController = Get.put(DriverStatusController());
   Timer? timer;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    DriverStatusController().onInit();
+    _driverStatusController.driverStatus();
   }
 
   final List _widgetOptions = [
